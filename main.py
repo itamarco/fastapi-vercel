@@ -1,7 +1,10 @@
+import logging
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 import requests
 
+logger = logging.getLogger(__name__)
 app = FastAPI()
 
 API_TOKEN = '7485608813:AAFcFEZm4fSy3aHxntUR7ou9scQ9VQfJWSs'
@@ -31,6 +34,7 @@ async def webhook(telegram_webhook: TelegramWebhook):
 
 @app.get("/periodic_hello")
 async def webhook(telegram_webhook: TelegramWebhook):
+    logger.info("Sending periodic hello message")
     send_message("549326175", "אהלן סהלן")
 
 
