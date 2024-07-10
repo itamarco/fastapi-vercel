@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "main.py"
     }
+  ],
+  "crons": [
+    {
+      "schedule": "0 * * * *",
+      "path": "/periodic_hello"
+    }
   ]
 }
