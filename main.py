@@ -29,6 +29,11 @@ async def webhook(telegram_webhook: TelegramWebhook):
     return {"status": "ok"}
 
 
+@app.post("/periodic_hello")
+async def webhook(telegram_webhook: TelegramWebhook):
+    send_message("549326175", "אהלן סהלן")
+
+
 def send_message(chat_id, text):
     url = f"{TELEGRAM_API_URL}/sendMessage"
     payload = {
