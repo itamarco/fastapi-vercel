@@ -29,7 +29,7 @@ async def webhook(telegram_webhook: TelegramWebhook):
     return {"status": "ok"}
 
 
-@app.post("/periodic_hello")
+@app.get("/periodic_hello")
 async def webhook(telegram_webhook: TelegramWebhook):
     send_message("549326175", "אהלן סהלן")
 
