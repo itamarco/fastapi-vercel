@@ -4,9 +4,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import requests
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+from fastapi.logger import logger
 
-logger = logging.getLogger(__name__)
 app = FastAPI()
 
 API_TOKEN = '7485608813:AAFcFEZm4fSy3aHxntUR7ou9scQ9VQfJWSs'
