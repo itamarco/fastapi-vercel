@@ -14,7 +14,7 @@
   ],
   "crons": [
     {
-      "schedule": "0 * * * *",
+      "schedule": "54 17 * * *",
       "path": "/periodic_hello"
     }
   ]
