@@ -33,7 +33,7 @@ async def webhook(telegram_webhook: TelegramWebhook):
 
 
 @app.get("/periodic_hello")
-async def webhook(telegram_webhook: TelegramWebhook):
+async def cron():
     logger.info("Sending periodic hello message")
     send_message("549326175", "אהלן סהלן")
 
