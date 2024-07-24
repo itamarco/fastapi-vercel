@@ -6,6 +6,8 @@ import requests
 
 from fastapi.logger import logger
 
+from app.db import reminder_dao
+
 app = FastAPI()
 
 API_TOKEN = '7485608813:AAFcFEZm4fSy3aHxntUR7ou9scQ9VQfJWSs'
@@ -20,6 +22,10 @@ class TelegramWebhook(BaseModel):
 async def root():
     return {"message": "Hello World"}
 
+@app.get("/db")
+async def db():
+    reminder_dao.find_by_user("LOLO")
+    return {"message": "Database is ready"}
 
 @app.post("/webhook")
 async def webhook(telegram_webhook: TelegramWebhook):
