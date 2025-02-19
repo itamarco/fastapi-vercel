@@ -1,12 +1,7 @@
-python-telegram-bot
 pydantic
-requests
-
+ruff
 fastapi==0.111.1
 psycopg2-binary
-pyluach==2.2.0
-pyTelegramBotAPI==4.21.0
-pytest==7.3.1
 SQLAlchemy==2.0.31
 uvicorn==0.30.3
-python-dotenv
+sqlmodel==0.0.22

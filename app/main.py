@@ -1,58 +1,39 @@
-import logging
+from fastapi import FastAPI, Depends
 
-from fastapi import FastAPI
-from pydantic import BaseModel
-import requests
-
-from fastapi.logger import logger
-
-from app.db import reminder_dao
-
-app = FastAPI()
-
-API_TOKEN = '7485608813:AAFcFEZm4fSy3aHxntUR7ou9scQ9VQfJWSs'
-TELEGRAM_API_URL = f"https://api.telegram.org/bot{API_TOKEN}"
+from app.db import create_all
+from app.message_dao import MessageDAO
+from app.models import MessageCreate, MessageResponse
+from app.schema import Message
 
 
-class TelegramWebhook(BaseModel):
-    message: dict
+def get_message_dao() -> MessageDAO:
+    return MessageDAO()
+
+def lifespan(_: FastAPI):
+    create_all()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@app.get("/db")
-async def db():
-    reminder_dao.find_by_user("LOLO")
-    return {"message": "Database is ready"}
-
-@app.post("/webhook")
-async def webhook(telegram_webhook: TelegramWebhook):
-    message = telegram_webhook.message
-    chat_id = message['chat']['id']
-    text = message.get('text', '')
-
-    reply_text = f"Hello, {text}"
-    send_message(chat_id, reply_text)
-
+async def root() -> dict[str, str]:   
     return {"status": "ok"}
 
 
-@app.get("/periodic_hello")
-async def cron():
-    logger.info("Sending periodic hello message")
-    send_message("549326175", "אהלן סהלן")
+@app.post("/messages")
+async def create_message(
+    msg: MessageCreate, 
+    message_dao: MessageDAO = Depends(get_message_dao)
+) -> MessageResponse:
+    return message_dao.create(msg.message)
 
-
-def send_message(chat_id, text):
-    url = f"{TELEGRAM_API_URL}/sendMessage"
-    payload = {
-        "chat_id": chat_id,
-        "text": text
-    }
-    requests.post(url, json=payload)
-
+@app.get("/messages")
+async def get_message(
+    message_dao: MessageDAO = Depends(get_message_dao)
+) -> list[MessageResponse]:
+    return message_dao.get_all()
 
 if __name__ == '__main__':
     import uvicorn
