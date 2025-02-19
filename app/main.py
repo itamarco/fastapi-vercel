@@ -9,7 +9,7 @@ import logging
 import sys
 
 logging.basicConfig(
-    stream=sys.stdout,  # Redirect logs to stdout
+    stream=sys.stderr,  # Redirect logs to stdout
     level=logging.INFO,
     format="%(levelname)s: %(message)s"
 )
