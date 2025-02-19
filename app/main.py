@@ -5,6 +5,14 @@ from app.message_dao import MessageDAO
 from app.models import MessageCreate, MessageResponse
 from app.schema import Message
 
+import logging
+import sys
+
+logging.basicConfig(
+    stream=sys.stdout,  # Redirect logs to stdout
+    level=logging.INFO,
+    format="%(levelname)s: %(message)s"
+)
 
 def get_message_dao() -> MessageDAO:
     return MessageDAO()
