@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
+from fastapi.responses import JSONResponse
 
 from app.db import create_all
 from app.message_dao import MessageDAO
@@ -8,6 +9,7 @@ from app.schema import Message
 import logging
 import sys
 
+# Workaround for logging in Vercel
 logging.basicConfig(
     stream=sys.stderr,  # Redirect logs to stdout
     level=logging.INFO,
